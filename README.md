@@ -23,3 +23,6 @@ chmod +x ./tcpforwarder
 no we can use the ir server ip address and 8080 port instead of 44.55.66.77 and 9090 for connecting to that service running on the usa vps. 
 
 ` client > x.x.x.x:8080 -> 44.55.66.77:9090`
+
+
+you can use `screen` for keeping the process alive ( you can install it with `apt install screen -y` on ubuntu)
