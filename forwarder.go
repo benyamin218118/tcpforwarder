@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"net"
+	"time"
 )
 
 type Forwarder struct {
@@ -34,6 +36,7 @@ func (f *Forwarder) Start() {
 				_ = srcConn.Close()
 				return
 			}
+			println(fmt.Sprintf(`%s -- %s <-> %s`, time.Now().Format(time.RFC3339), srcConn.RemoteAddr().String(), f.dst.String()))
 			go func(srcConn, dstConn net.Conn) {
 				_, _ = io.Copy(srcConn, dstConn)
 				_ = srcConn.Close()
