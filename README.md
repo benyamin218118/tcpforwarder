@@ -4,7 +4,7 @@ its a simple tcp forwarding tool
 
 ## Download and usage :
 ```
-wget github.com/benyamin218118/tcpforwarder/tcpforwarder
+wget https://github.com/benyamin218118/tcpforwarder/raw/main/tcpforwarder
 chmod +x ./tcpforwarder
 
 ./tcpforwarder -lPort LISTEN_PORT -rHost REMOTE_SERVER_HOST -rPort REMOTE_SERVER_PORT
