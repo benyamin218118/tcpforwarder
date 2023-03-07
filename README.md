@@ -1,6 +1,8 @@
 # tcp forwarder
 
-its a simple tcp forwarding tool
+its a simple tcp forwarding tool to forward incoming tcp connections to a remote service at a remote host
+
+`you can use a domain as the remote host too.`
 
 ## Download and usage :
 ```
