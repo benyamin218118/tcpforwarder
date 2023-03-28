@@ -4,18 +4,21 @@ import (
 	"fmt"
 	"io"
 	"net"
+	"strings"
 	"time"
 )
 
 type Forwarder struct {
-	src Address
-	dst Address
+	src         Address
+	dst         Address
+	dialTimeout int
 }
 
-func NewForwarder(src Address, dst Address) *Forwarder {
+func NewForwarder(src Address, dst Address, dialTimeout int) *Forwarder {
 	return &Forwarder{
-		src: src,
-		dst: dst,
+		src:         src,
+		dst:         dst,
+		dialTimeout: dialTimeout,
 	}
 }
 
@@ -30,9 +33,13 @@ func (f *Forwarder) Start() {
 			continue
 		}
 		go func(srcConn net.Conn) {
-			dstConn, err := net.Dial("tcp", f.dst.String())
+			dstConn, err := net.DialTimeout("tcp", f.dst.String(), time.Duration(f.dialTimeout)*time.Second)
 			if err != nil {
-				println(err.Error())
+				if strings.Contains(err.Error(), "i/o timeout") {
+					println(fmt.Sprintf(`%s -- %s >-< %s %s`, time.Now().Format(time.RFC3339), srcConn.RemoteAddr().String(), f.dst.String(), "dial timed out"))
+				} else {
+					println(err.Error())
+				}
 				_ = srcConn.Close()
 				return
 			}

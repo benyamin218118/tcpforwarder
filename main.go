@@ -22,6 +22,7 @@ find me on telegram: @unsafepointer
 	listenPort := flag.Int("lPort", 8080, "listen port")
 	remoteHost := flag.String("rHost", "8.8.8.8", "remote host")
 	remotePort := flag.Int("rPort", 53, "remote port")
+	dialTimeout := flag.Int("timeout", 4, "dial timeout in seconds")
 	help := flag.Bool("help", false, "print help")
 
 	flag.Parse()
@@ -29,6 +30,11 @@ find me on telegram: @unsafepointer
 		flag.PrintDefaults()
 		return
 	}
+
+	if *dialTimeout <= 0 || *dialTimeout > 32 {
+		panic("invalid dial timeout, it should be bigger than 0 and smaller than 32")
+	}
+
 	src := Address{
 		Host: *listenHost,
 		Port: *listenPort,
@@ -40,7 +46,7 @@ find me on telegram: @unsafepointer
 
 	println(fmt.Sprintf(`tcp://%s <-> tcp://%s`+"\n", src.String(), dst.String()))
 
-	forwarder := NewForwarder(src, dst)
+	forwarder := NewForwarder(src, dst, *dialTimeout)
 
 	forwarder.Start()
 }
