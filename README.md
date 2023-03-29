@@ -23,6 +23,23 @@ now we can use the ir vps ip address and 8080 port instead of 44.55.66.77 and 90
 
 ` client > x.x.x.x:8080 -> 44.55.66.77:9090`
 
-
 you can use `screen` for keeping the process alive or write a `systemd unit file`
 ( you can install `screen` tool using `apt install screen -y` on ubuntu)
+
+# FAQ
+- can we use domain address instead of ip address?
+```
+Yes, you just need to use domain address in the rHost param value.
+in case of the example above, if the domain address is sub.domain.com then it will become this:
+> ./tcpforwarder -lPort 8080 -rHost sub.domain.com -rPort 9090
+```
+
+- why does it log too many open files sometimes? how to fix it?
+```
+The "Too Many Open Files" error indicates that this process has reached its max open socket limit.
+you can check the current open file limit (open socket limit in this case) using  `ulimit -a | grep open`
+
+to fix this issue you need to change this limit to a higher number before running the tcpforwarder
+for example to set the limit to 10240 :
+ulimit -n 10240
+```
