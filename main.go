@@ -15,18 +15,19 @@ func (a *Address) String() string {
 }
 
 func main() {
-	println(`
-find me on telegram: @unsafepointer
-`)
 	listenHost := flag.String("lHost", "0.0.0.0", "listen host")
 	listenPort := flag.Int("lPort", 8080, "listen port")
 	remoteHost := flag.String("rHost", "8.8.8.8", "remote host")
 	remotePort := flag.Int("rPort", 53, "remote port")
 	dialTimeout := flag.Int("timeout", 4, "dial timeout in seconds")
 	help := flag.Bool("help", false, "print help")
+	h := flag.Bool("h", false, "")
 
 	flag.Parse()
-	if *help {
+	if *help || *h {
+		println(`
+find me on telegram: @unsafepointer
+`)
 		flag.PrintDefaults()
 		return
 	}
