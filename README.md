@@ -21,7 +21,7 @@ $ ./tcpforwarder -lPort 4444 -rHost 1.2.3.4 -rPort 80
 forward incoming tcp connection on port range 4444-5555 to example.com 4444-5555 :
 $ ./tcpforwarder -lPort 4444-5555 -rHost example.com
 ```
-## example :
+## Detailed Example :
 
 **we want to forward incoming tcp connections from our ir vps to a service running on port 9090 on a usa vps**
 - first we need to choose a listen port for the ir vps like 8080 ( we will accept the incoming tcp connections on it )
