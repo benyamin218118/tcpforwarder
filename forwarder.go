@@ -25,7 +25,6 @@ func NewForwarder(src Address, dst Address, dialTimeout int) *Forwarder {
 func (f *Forwarder) Start() {
 	listener, err := net.Listen("tcp", f.src.String())
 	panicIfErr(err)
-
 	for {
 		srcConn, err := listener.Accept()
 		if err != nil {
