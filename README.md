@@ -10,7 +10,18 @@ chmod +x ./tcpforwarder
 ./tcpforwarder -lPort LISTEN_PORT -rHost REMOTE_SERVER_HOST -rPort REMOTE_SERVER_PORT
 ```
 
-## examples :
+## Simple Usage :
+```
+forward incoming tcp connection on port 4444 to 1.2.3.4 port 80 :
+$ ./tcpforwarder -lPort 4444 -rHost 1.2.3.4 -rPort 80
+```
+
+## Forward a Port Range :
+```
+forward incoming tcp connection on port range 4444-5555 to example.com 4444-5555 :
+$ ./tcpforwarder -lPort 4444-5555 -rHost example.com
+```
+## example :
 
 **we want to forward incoming tcp connections from our ir vps to a service running on port 9090 on a usa vps**
 - first we need to choose a listen port for the ir vps like 8080 ( we will accept the incoming tcp connections on it )
