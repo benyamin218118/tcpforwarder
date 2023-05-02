@@ -54,3 +54,8 @@ to fix this issue you need to change this limit to a higher number before runnin
 for example to set the limit to 10240 :
 ulimit -n 10240
 ```
+
+- what is this `can't assign requested address` error about? how to solve it?
+```
+it may happen when you are forwarding a wide range of ports, like 250-65534 which is almost all available ports! just leave 10000 ports away and it will work alright.
+```
