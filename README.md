@@ -37,6 +37,43 @@ now we can use the ir vps ip address and 8080 port instead of 44.55.66.77 and 90
 you can use `screen` for keeping the process alive or write a `systemd unit file`
 ( you can install `screen` tool using `apt install screen -y` on ubuntu)
 
+## How to Keep The Process Alive?
+there are lots of ways but i choose to create a service for it.
+first we need to create a unit file in this address :<br/>
+`/etc/systemd/system/SERVICENAME.service`
+
+choose a service name and replace it with SERVICENAME first; lets use `tcpforwardersvc`<br/>
+now we need to create the file with nano :<br/>
+`nano /etc/systemd/system/tcpforwardersvc.service`
+
+and paste this content into it :
+```
+[Unit]
+Description=tcpforwarder service
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=16
+User=root
+ExecStart=/root/tcpforwarder -lPort 4242 -rHost mysub.domain.com -rPort 5080
+
+[Install]
+WantedBy=multi-user.target
+```
+dont forget to edit the `ExecStart` value, thats the tcpforwarder command you want to run.
+after saving the contents ( by ctrl+x  y  enter ) we need to enable this `tcpforwardersvc` using `systemctl` so it will start again after reboot<br/>
+`$ systemctl enable tcpforwardersvc`
+
+and then we need to start the service<br/>
+`$ service tcpforwardersvc start`
+
+to check the service state you can use the `service tcpforwardersvc status` but if you wanned to see request logs :<br/>
+`$ journalctl -u tcpforwardersvc -n 32 -f`
+
 # FAQ
 - can we use domain address instead of ip address?
 ```
